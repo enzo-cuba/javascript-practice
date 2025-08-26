@@ -27,8 +27,10 @@ Reglas:
 // Mi solución:
 
 // let cuenta = parseFloat(prompt("Total de la cuenta"));
-// let propina = Number(prompt("Propina (Porcentaje)"));;
+// let propina = parseFloat(prompt("Propina (Porcentaje)"));;
+
 // let calcular = parseFloat(cuenta / propina + cuenta).toFixed(2);
+
 // console.log("Total de la cuenta: " + cuenta);
 // console.log("Propina: " + propina + "%");
 // console.log("Total a pagar: " + calcular);
