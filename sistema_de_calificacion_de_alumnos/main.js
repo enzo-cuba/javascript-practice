@@ -3,42 +3,59 @@ const formData = document.getElementById("studentInput");
 const container = document.getElementById("studentResume");
 
 // Objeto modelo donde guardar datos de cada alumno.
-const obj = {
-    nombre: "",
-    notas: [],
-    promedio: 0,
-    estado: null
-}
+const obj = {}
 
 // Con esto evitamos que el navegador se reinicie al hacer submit.
 formData.addEventListener('submit', (event) =>{
     event.preventDefault();
 
-    // Acá se procesan todos los datos del formulario:
-
-    const data = new FormData(formData); // Guardamos todos los datos del form en esta variable.
-
-    // Obtenemos los datos por separado por el name de cada input.
-    const name = data.get("student"); // Obtenemos el nombre del alumno.
-    const scoresArray = data.getAll("score"); // Obtenemos los datos de cada input con el mismo name y se agrupan en un array.
-
-    // Pasamos las notas del array a números en un nuevo array.
-    const scoresNumber = scoresArray.map(num => Number(num));
+    // Primero validamos los datos antes de procesarlos.
     
-    // Sacamos el promedio y convertimos a números.
-    const calcAverage = scoresNumber.reduce((acc, num) => acc + num, 0) / scoresNumber.length; // Sumamos cada nota entre sí y luego dividimos por la cantidad de notas.
-    const average = Number(parseFloat(calcAverage).toFixed(2)); // Limitamos el resultado a dos decimales y reconvertimos a número.
-   
-    // Validamos los datos e ingresamos al objeto.
-    
+    // Función para validar los datos.
+    function dataValidation(){
 
-    
-    obj.nombre = name;
-    obj.notas = scoresNumber;
-    
-    //obj.estado = promedio >= 60 ? "Aprobado" : "Reprobado";
+        const data = new FormData(formData); // Guardamos todos los datos del form en esta variable.
 
-    // Añadimos esos datos al objeto.
+        const validData = {} // Un objeto vacío donde guardar los datos válidos.
 
-    console.log(obj)
+        // Obtenemos los datos por separado por el name de cada input.
+        const name = data.get("student");
+        const inputsArray = data.getAll("score"); // Los inputs obtenidos se agrupan en un array.
+        
+        // Pasamos las notas del array a números en un nuevo array.
+        const numbersArray = inputsArray.map(num => Number(num));
+
+        // Validamos cada nota del array.
+        const validScores = numbersArray.every(num => num <= 100 && num >= 0)
+
+        // Si todo sale bien se añaden los datos al objeto.
+        if (validScores === true && name !== ""){
+            validData.notas = numbersArray;
+            validData.nombre = name;
+            return validData;
+        } else {
+            alert("Datos inválidos.")
+        }
+    }
+
+    function validAverageAndStatus(){
+
+        const scoresArray = dataValidation().notas; // Atrapamos array de notas.
+        const processData = {} // Objeto donde guardar los datos procesados.
+    
+        // Sacamos promedio y estado.
+        const avrg = scoresArray.reduce((acc, num) => acc + num, 0) / scoresArray.length;
+        const reconvertirAvrg = Number(parseFloat(avrg).toFixed(2));
+        const status = avrg >= 60 ? "Aprobado" : "Reprobado";
+    
+        // Añadimos los datos al objeto.
+        processData.promedio = reconvertirAvrg;
+        processData.estado = status;
+    
+        return processData;
+    }
+
+    // Nuevo objeto para fusionar los resultados de las funciones. 
+    const alumno = { ...dataValidation(), ...validAverageAndStatus()};
+    console.log(alumno);
 })
