@@ -1,9 +1,9 @@
 // Obtenemos el formulario y el contenedor donde se imprimirán los detalles de cada alumno.
 const formData = document.getElementById("studentInput");
-const container = document.getElementById("studentResume");
+const container = document.getElementById("studentInfo");
 
-// Objeto modelo donde guardar datos de cada alumno.
-const obj = {}
+// Array donde guardar cada alumno.
+const arrStudents = [];
 
 // Con esto evitamos que el navegador se reinicie al hacer submit.
 formData.addEventListener('submit', (event) =>{
@@ -38,7 +38,8 @@ formData.addEventListener('submit', (event) =>{
         }
     }
 
-    function validAverageAndStatus(){
+    try {
+        function validAverageAndStatus(){
 
         const scoresArray = dataValidation().notas; // Atrapamos array de notas.
         const processData = {} // Objeto donde guardar los datos procesados.
@@ -53,9 +54,88 @@ formData.addEventListener('submit', (event) =>{
         processData.estado = status;
     
         return processData;
+
     }
 
-    // Nuevo objeto para fusionar los resultados de las funciones. 
-    const alumno = { ...dataValidation(), ...validAverageAndStatus()};
-    console.log(alumno);
+        // Nuevo objeto para fusionar los resultados de las funciones. 
+        const alumno = { ...dataValidation(), ...validAverageAndStatus()};
+        arrStudents.push(alumno); // Agregamos cada alumno al array de alumnos.
+
+        // Imprimimos cada alumno en el contenedor.
+        container.innerHTML = "";
+        arrStudents.forEach(student => {
+        container.innerHTML += `
+            <li>
+                Alumno: ${student.nombre}, 
+                Notas: ${student.notas}, 
+                Promedio: ${student.promedio}, 
+                Estado: <span style="color: ${
+                    student.estado === "Aprobado" ? "green" : "red"
+                }; font-weight: bold;">${student.estado}</span>
+            </li>`;
+        });
+
+        
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
 })
+
+// Corrección GPT:
+
+/*
+
+const formData = document.getElementById("studentInput");
+const container = document.getElementById("studentInfo");
+const arrStudents = [];
+
+formData.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // Validar y obtener datos
+    function dataValidation() {
+        const data = new FormData(formData);
+        const name = data.get("student");
+        const inputsArray = data.getAll("score").map(Number);
+
+        if (!name || !inputsArray.every(num => !isNaN(num) && num >= 0 && num <= 100)) {
+            alert("Datos inválidos.");
+            return null;
+        }
+        return { nombre: name, notas: inputsArray };
+    }
+
+    // Calcular promedio y estado
+    function calculateAverageAndStatus(validData) {
+        const avrg = validData.notas.reduce((acc, n) => acc + n, 0) / validData.notas.length;
+        const promedio = +avrg.toFixed(2);
+        const estado = promedio >= 60 ? "Aprobado" : "Reprobado";
+        return { promedio, estado };
+    }
+
+    const validatedData = dataValidation();
+    if (!validatedData) return;
+
+    const alumno = { ...validatedData, ...calculateAverageAndStatus(validatedData) };
+    arrStudents.push(alumno);
+
+    // Renderizar lista
+    container.innerHTML = "";
+    arrStudents.forEach(student => {
+        container.innerHTML += `
+            <li>
+                Alumno: ${student.nombre}, 
+                Notas: ${student.notas.join(", ")}, 
+                Promedio: ${student.promedio}, 
+                Estado: <span style="color: ${student.estado === "Aprobado" ? "green" : "red"}; font-weight: bold;">
+                    ${student.estado}
+                </span>
+            </li>`;
+    });
+});
+
+*/
