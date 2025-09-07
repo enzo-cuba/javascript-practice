@@ -1,39 +1,68 @@
-/* 
-Funcionalidades:
+const form = document.getElementById('form');
+const tablaBody = document.querySelector('#tabla tbody');
+const filtroInput = document.getElementById('filtrar-nombre');
 
-Agregar productos
+const arrayDeProductos = [];
 
-- Inputs: nombre, categoría, cantidad, precio
 
-- Validar que los datos sean correctos (nombre no vacío, cantidad y precio números válidos)
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    obtenerDatos();
+});
 
--  Guardar cada producto en un array de objetos
+filtroInput.addEventListener('input', () => {
+    filtrarProductos();
+})
 
-Mostrar productos
+function obtenerDatos(){
+    const datos = Object.fromEntries(new FormData(form));
 
-- Mostrar todos los productos en una lista o tabla
+    // Validación de datos
 
-- Actualizar el DOM dinámicamente cada vez que se agregue un producto
+    if (!datos.nombre){
+        alert("Escriba un nombre válido");
+        return;
+    }
 
-Filtrado dinámico
+    if(!datos.cantidad || isNaN(datos.cantidad) || datos.cantidad <= 0){
+        alert("Escriba una cantidad válida");
+        return;
+    }
 
-- Input de búsqueda por nombre parcial o completo
+    if(!datos.precio || isNaN(datos.precio) || datos.precio <= 0){
+        alert("Escriba un precio válido");
+        return;
+    }
 
-- La lista se filtra mientras el usuario escribe, mostrando solo los productos que coincidan
+    arrayDeProductos.push(datos) // Agregamos los datos validados al array
 
-Eliminar un producto
+    mostrarProductos() // Imprime los productos si fueron añadidos al array
 
-- Cada producto podría tener un botón “Eliminar” que borre el objeto del array y del DOM
+    form.reset();
 
-- Editar un producto existente
+}
 
-- Cargar los datos del producto en los inputs
+function mostrarProductos(){
+    
+    const index = arrayDeProductos.length - 1;
+    const fila = document.createElement("tr");
 
-- Modificar valores y actualizar el objeto en el array y en la lista del DOM
+    for (const producto of arrayDeProductos){
+        fila.innerHTML = `
+        <td>${producto.nombre}</td>
+        <td>${producto.categoria}</td>
+        <td>${producto.cantidad}</td>
+        <td>${producto.precio}</td>
+        <td><button onclick="eliminarAlumno(${index}, this)">Eliminar</button></td>
+        <td><button onclick="eliminarAlumno(${index}, this)">Editar</button></td>
+        `;
+    }
 
-Filtrado por categoría
+    tablaBody.appendChild(fila);
+    
+}
 
-- Agregar un <select> con categorías
-
-- Filtrar la lista según la categoría seleccionada
-*/
+function filtrarProductos(){
+    //const texto = filtroInput.value;
+    //const resultados = arrayDeProductos.filter(producto => producto.nombre.includes(texto));
+}
