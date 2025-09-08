@@ -2,8 +2,9 @@
     display: flex;
     flex-direction: row;
     gap: 40px; 
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     padding: 20px;
+    align-items: flex-start;
 }
 
 .formulario-contenedor {
@@ -16,42 +17,6 @@ form {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.tabla-contenedor {
-    flex: 2;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-#filtrar-nombre,
-#filtrar-categoria {
-    padding: 8px 12px;
-    margin-right: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #dcdde1;
-    border-radius: 6px;
-    transition: 0.2s;
-}
-
-#filtrar-nombre:focus,
-#filtrar-categoria:focus {
-    border-color: #40739e;
-    outline: none;
-    box-shadow: 0 0 5px rgba(64,115,158,0.3);
-}
-
-h1, h3 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: #40739e;
 }
 
 form label {
@@ -92,9 +57,54 @@ form button:hover {
     background-color: #2f3640;
 }
 
+#filtrar-nombre,
+#filtrar-categoria {
+    padding: 8px 12px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+#filtrar-nombre:focus,
+#filtrar-categoria:focus {
+    border-color: #40739e;
+    outline: none;
+    box-shadow: 0 0 5px rgba(64,115,158,0.3);
+}
+
+h1, h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #40739e;
+}
+
+.tabla-contenedor {
+    flex: 2;
+    min-width: 300px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
 thead {
     background-color: #40739e;
     color: #fff;
+}
+
+thead th:first-child {
+    border-top-left-radius: 10px;
+}
+thead th:last-child {
+    border-top-right-radius: 10px;
 }
 
 th, td {
@@ -108,4 +118,31 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
     background-color: #dcdde1;
+}
+
+.stock-bajo {
+    color: red;
+    font-weight: bold;
+}
+
+#tabla tbody button.eliminar,
+#tabla tbody button.editar {
+    all: unset;
+    cursor: pointer;
+    color: #40739e;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+#tabla tbody button.eliminar:hover {
+    color: red;
+}
+
+#tabla tbody button.editar:hover {
+    color: green;
+}
+
+.input-error {
+    border-color: red !important;
+    box-shadow: 0 0 5px rgba(255,0,0,0.5);
 }

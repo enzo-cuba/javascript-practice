@@ -9,13 +9,12 @@
     <h1>Inventario de productos</h1>
     
     <div class="contenedor-principal">
-        <!-- Formulario a la izquierda -->
         <div class="formulario-contenedor">
             <h3>Agregar nuevo producto</h3>
             <form id="form">
 
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" value="Enzo">
+                <input type="text" id="nombre" name="nombre">
 
                 <label for="categoria">Categoría</label>
                 <select id="categoria" name="categoria">
@@ -26,25 +25,24 @@
                 </select>
 
                 <label for="cantidad">Cantidad</label>
-                <input type="number" id="cantidad" name="cantidad" value="10">
+                <input type="number" id="cantidad" name="cantidad">
 
                 <label for="precio">Precio</label>
-                <input type="number" id="precio" name="precio" value="100">
+                <input type="number" id="precio" name="precio">
 
                 <button type="submit">Agregar</button>
             </form>
         </div>
 
-        <!-- Tabla y filtros a la derecha -->
         <div class="tabla-contenedor">
             <h3>Lista de productos</h3>
 
             <input type="text" id="filtrar-nombre" placeholder="Buscar por nombre">
             <select id="filtrar-categoria">
-                <option value="electronica">Electrónica</option>
-                <option value="informatica">Informática</option>
-                <option value="electrodomesticos">Electrodomésticos</option>
-                <option value="gaming">Gaming</option>
+                <option>Electrónica</option>
+                <option>Informática</option>
+                <option>Electrodomésticos</option>
+                <option>Gaming</option>
             </select>
 
             <table id="tabla">

@@ -34,6 +34,6 @@ Eliminar un producto
 
 Filtrado por categoría
 
-- Agregar un <select> con categorías
+- Agregar un select con categorías
 
 - Filtrar la lista según la categoría seleccionada
